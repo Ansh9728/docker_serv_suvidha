@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Depends
+import os
 from fastapi.responses import JSONResponse
 from typing import List, Optional
 from pydantic import BaseModel
@@ -12,6 +13,8 @@ from services import (
     update_complaint, delete_complaint, delete_complaint_media,
     upload_file_thread
 )
+from dotenv import load_dotenv
+load_dotenv()
 
 app = FastAPI(
     title="Rail Sathi Complaint API",
@@ -667,4 +670,4 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=5002)
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv('fastapi_port')))
